@@ -1,0 +1,6 @@
+# AUTH TOKEN HERE
+# GROUP ID HERE
+# BOT AUTH TOKEN HERE
+# Bot Name HERE
+# file name test
+# a,b,c,d,e (Where a = # of likes needed for Diamond, b = # for Platinum, and so on, do not surround with brackets, comma seperated list)
