@@ -3,8 +3,6 @@ import markovify
 import sys
 # dear god what have I done
 def ohHai():
-    reload(sys)
-    sys.setdefaultencoding('utf8')
     # returns mark string of the room
     football = ""
     football = catchFootball()

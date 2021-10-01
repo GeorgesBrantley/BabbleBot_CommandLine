@@ -15,7 +15,6 @@ from Tommy import catchFootball
 import menuOpts
 from commonWords import getCommonWords
 
-#TODO Best Friends
 #TODO Sexism
 
 # Bot Globals
@@ -160,15 +159,17 @@ def getTokens(prin = True):
     bronze = int(medalList[4])
 
     if prin:
-        print "File: " + confFileName + "\nTokens Used Below: "
-        print "Auth Token: " + Auth
-        print "BotName: " + BotName
-        print "BotID: " + BotID
-        print "groupID: " + groupID
+        print ("File: " + confFileName + "\nTokens Used Below: ")
+        print ("Auth Token: " + Auth)
+        print ("BotName: " + BotName)
+        print ("BotID: " + BotID)
+        print ("groupID: " + groupID)
 
 def comment(bot, burp):
     # posts comment to groupme
-    r = requests.post("https://api.groupme.com/v3/bots/post",data={"bot_id":bot.botID, "text":burp})
+    payload={"bot_id":bot.botID, "text":burp}
+    r = requests.post("https://api.groupme.com/v3/bots/post",params=payload)
+    print(r)
 
 
 def generateContent(bot):
@@ -190,10 +191,10 @@ def generateContent(bot):
         lastPos = idPos 
         while str(data[lastPos]) != "\"": # find last number
             lastPos+=1
-        print "DATA FOUND, LAST COMMENT ID IS : " + str(data[idPos:lastPos])
+        print ("DATA FOUND, LAST COMMENT ID IS : " + str(data[idPos:lastPos]))
         lastCommentSaved =  str(data[idPos:lastPos])
     except:
-        print "DATA file is not json, or doesn't exist"
+        print( "DATA file is not json, or doesn't exist")
         lastCommentSaved = None
 
     # test json thingy
@@ -206,7 +207,7 @@ def generateContent(bot):
     
     # Generate Users Vars
     flag = True
-    json2 = open("DATA2.json","wa")
+    json2 = open("DATA2.json","a")
     newComments = 0
     # GO THROUGH NEW DATA
     while flag:
@@ -244,7 +245,7 @@ def generateContent(bot):
                 flag = False
                 break;
 
-    print str(newComments) + " new Comments!"
+    print (str(newComments) + " new Comments!")
     json2.close()
 
     # GO THROUGH OLD DATA (STORED)
@@ -272,7 +273,7 @@ def generateContent(bot):
                 pass
 
     # APPEND OLD DATA TO NEW DATA, CHANGE FILE NAMES
-    for key,value in Users.iteritems():
+    for key,value in Users.items():
         value.calcMedals()
     os.system("cat DATA.json >> DATA2.json")
     os.system("rm -fr DATA.json")
@@ -284,18 +285,19 @@ def smallOptions(user, bot):
     global Users
     # options for indiviual users
     while True: 
-        print "User " + user.name + " Selected\nSelect an Option" 
-        print "1. Markov Chain Generator"
-        print "2. Number of Likes"
-        print "3. Number of Comments"
-        print "4. Ratio Likes/Comment"
-        print "5. Medal Count"
-        print "6. Most Common Words"
-        print "7. Best Friends"
-        print "8. Exit"
+        print ("User " + user.name + " Selected\nSelect an Option")
+        print ("1. Markov Chain Generator")
+        print ("2. Number of Likes")
+        print ("3. Number of Comments")
+        print ("4. Ratio Likes/Comment")
+        print ("5. Medal Count")
+        print ("6. Most Common Words")
+        print ("7. Best Friends")
+        print ("8. Exit")
+        
         
         try:
-            inputOpt = int(raw_input("Input Option Choice (1-8): "))
+            inputOpt = int(input("Input Option Choice (1-8): "))
         except:
             inputOpt = 0
 
@@ -326,30 +328,30 @@ def smallOptions(user, bot):
         elif inputOpt == 8:
             return
         else:
-            print "Error!"
+            print( "Error!")
             return
-        print output
+        print (output)
 
-        ans = raw_input("Do you wish to send this to the group chat? (y/n): ")
+        ans = input("Do you wish to send this to the group chat? (y/n): ")
         if ans == 'y':
             comment(bot,output)
-        print "\n"
+        print( "\n")
 
 def globeOptions(bot):
     global Users
     global allComs
     while True: 
-        print "GLOBAL SELECTED\nSelect an Option" 
-        print "1. Global Markov Generator"
-        print "2. Ranking of Likes"
-        print "3. Ranking of Comments"
-        print "4. Ratio Likes/Comment"
-        print "5. Most Common Words"
-        print "6. Global Best Friends"
-        print "7. GLobal Sexism Tracker"
-        print "8. MEDALS"
-        print "9. Exit"
-        inputOpt = raw_input("Input Option Choice (1-9): ")
+        print( "GLOBAL SELECTED\nSelect an Option" )
+        print( "1. Global Markov Generator")
+        print( "2. Ranking of Likes")
+        print( "3. Ranking of Comments")
+        print( "4. Ratio Likes/Comment")
+        print( "5. Most Common Words")
+        print( "6. Global Best Friends")
+        print( "7. GLobal Sexism Tracker")
+        print( "8. MEDALS")
+        print( "9. Exit")
+        inputOpt = input("Input Option Choice (1-9): ")
         try:
             inputOpt = int(inputOpt)
         except:
@@ -385,17 +387,17 @@ def globeOptions(bot):
         elif inputOpt == 9:
             break
         else:
-            print "Error!"
+            print ("Error!")
 
-        print output
+        print (output)
 
-        ans = raw_input("Do you wish to send this to the group chat? (y/n): ")
+        ans = input("Do you wish to send this to the group chat? (y/n): ")
         if ans == 'y':
             if len(output) <500:
                 comment(bot,output)
             else:
                 # Comment too long, gonna have to mash it together
-                print "Splitting it!"
+                print ("Splitting it!")
                 newOut = output.split("\n\n")
                 x = 0
                 while x < len(newOut):
@@ -413,22 +415,22 @@ def globeOptions(bot):
                         oner = newOut[x] + "\n\n" 
                         comment(bot,oner)
                         x+=1 
-        print "\n"
+        print ("\n")
 
 def medalOptions(bot):
     global Users
     global allComs
     while True: 
-        print "\nMEDALS SELECTED\nSelect an Option" 
-        print "1. Bronze Medals"
-        print "2. Silver Medals"
-        print "3. Gold Medals"
-        print "4. Platinum Medals"
-        print "5. Diamond medals"
-        print "6. Shame Medals"
-        print "7. Exit"
+        print ("\nMEDALS SELECTED\nSelect an Option" )
+        print ("1. Bronze Medals")
+        print ("2. Silver Medals")
+        print ("3. Gold Medals")
+        print ("4. Platinum Medals")
+        print ("5. Diamond medals")
+        print ("6. Shame Medals")
+        print ("7. Exit")
 
-        inputOpt = raw_input("Input Option Choice (1-8): ")
+        inputOpt = input("Input Option Choice (1-8): ")
         try:
             inputOpt = int(inputOpt)
         except:
@@ -451,49 +453,47 @@ def medalOptions(bot):
         elif inputOpt == 7:
             return
         else:
-            print "Error!"
-        print "\n"
-        print output
+            print ("Error!")
+        print ("\n")
+        print (output)
 
-        ans = raw_input("Do you wish to send this to the group chat? (y/n): ")
+        ans = input("Do you wish to send this to the group chat? (y/n): ")
         if ans == 'y':
             comment(bot,output)
-        print "\n"
+        print ("\n")
 
 
 def userMenu(bender):
     while True:
         num = 0
-        print "\nUsers Selection: "
+        print ("\nUsers Selection: ")
         # list items
-        for key,value in Users.iteritems():
+        for key,value in Users.items():
             num+=1
-            print str(num) + ". " + value.name + ": " + key
+            print (str(num) + ". " + value.name + ": " + key)
         num+=1
         exit = num
-        print str(num) + ". Return\n"
+        print (str(num) + ". Return\n")
         try:
-            inputnum = int(raw_input("Input Number to Select Option " +\
+            inputnum = int(input("Input Number to Select Option " +\
                     "(1," + str(num) + "): "))
         except:
             inputnum = 5000
         # check if input is in 
 
         if inputnum == exit:
-            print "Returning to Main Menu\n"
+            print ("Returning to Main Menu\n")
             break;
         elif inputnum < num and inputnum > 0:
-            for key,value in Users.iteritems():
+            for key,value in Users.items():
                 inputnum-=1
                 if inputnum == 0:
                     smallOptions(Users[key], bender)        
         else:
-            print "Input not found!\n"
+            print ("Input not found!\n")
             return
 
 if __name__ == "__main__":
-    reload(sys)  
-    sys.setdefaultencoding('utf8')
     # Get AUTH, GroupID, BotID, and more from config.txt
     getTokens() 
     # create bot, uses info in file
@@ -503,20 +503,20 @@ if __name__ == "__main__":
     generateContent(bender)
     # Higher Menu! 
     while True:
-        print "\nSelect A Menu:"
-        print "1. User Menu"
-        print "2. Global Menu"
-        print "3. Settings Menu"
-        print "4. Exit Program"
+        print ("\nSelect A Menu:")
+        print ("1. User Menu")
+        print ("2. Global Menu")
+        print ("3. Settings Menu")
+        print ("4. Exit Program")
 
         try:
-            inputnum = int(raw_input("\nInput Number to Select Option (1-4): "))
+            inputnum = int(input("\nInput Number to Select Option (1-4): "))
         except:
             inputnum = 5000
         # check if input is in 
 
         if inputnum == 4:
-            print "Thank you for using this program\n"
+            print ("Thank you for using this program\n")
             break;
         elif inputnum ==3:
             settings.settingMenu(bender,confFileName)
@@ -528,10 +528,10 @@ if __name__ == "__main__":
         elif inputnum == 88:
             # SECRET TOMMY BOT
             room = ohHai()
-            print room 
-            shouldI = raw_input("\ny/n to post: ")
+            print (room )
+            shouldI = input("\ny/n to post: ")
             if shouldI == "y":
                 comment(bender,room)
         else:
-            print "Input not found, try again!\n"
+            print ("Input not found, try again!\n")
             break 

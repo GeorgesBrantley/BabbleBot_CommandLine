@@ -12,7 +12,7 @@ def marky(userID,allComs,Users,globe=False, lisa = False):
         for x in allComs:
             if x["sender_type"] == "user":
                 try:
-                    strInput += x['text'].encode("utf8") + ". "
+                    strInput += x['text'] + ". "
                 except:
                     pass
         if lisa:
@@ -21,7 +21,7 @@ def marky(userID,allComs,Users,globe=False, lisa = False):
         for x in Users[userID].coms:
             try:
                 # sometimes the text has errors (fucking emojis)
-                strInput += x['text'].encode("utf8") + ". "
+                strInput += x['text']+ ". "
             except:
                 pass
         if lisa:

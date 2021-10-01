@@ -22,7 +22,7 @@ def comWords(coms):
     # pull out text from comments
     for com in coms:
         try:
-           comments.append(com['text'].encode("utf8")) 
+           comments.append(com['text']) 
         except:
             pass
 
@@ -34,7 +34,18 @@ def comWords(coms):
             # get rid of caps
             x = x.lower()
             # get rid of !.
-            x = x.translate(None,".!?><,:'[]{}()@")
+            x = x.replace(".","")
+            x = x.replace("!","")
+            x = x.replace("?","")
+            x = x.replace("<","")
+            x = x.replace(">","")
+            x = x.replace(",","")
+            x = x.replace("'","")
+            x = x.replace("[","")
+            x = x.replace("]","")
+            x = x.replace("(","")
+            x = x.replace(")","")
+            x = x.replace("@","")
             if x not in words:
                 words[x] = 1
             else:
@@ -49,7 +60,7 @@ def comWords(coms):
         if b in words:
             del words[b]
     # Put into list
-    tmp = [(v,k) for k,v in words.iteritems() ]
+    tmp = [(v,k) for k,v in words.items() ]
     # Sort
     tmp.sort(reverse=True)
     # Return top 5
@@ -63,12 +74,23 @@ if __name__ == "__main__":
         # add them to dicts
         for x in word:
             x = x.lower()
-            x = x.translate(None,".!?><,:'[]{}()")
+            x = x.replace(".","")
+            x = x.replace("!","")
+            x = x.replace("?","")
+            x = x.replace("<","")
+            x = x.replace(">","")
+            x = x.replace(",","")
+            x = x.replace("'","")
+            x = x.replace("[","")
+            x = x.replace("]","")
+            x = x.replace("(","")
+            x = x.replace(")","")
+            x = x.replace("@","")
             if x not in words:
                 words[x] = 1
             else:
                 words[x] = words[x] + 1
 
-    tmp = [(v,k) for k,v in words.iteritems() ]
+    tmp = [(v,k) for k,v in words.items() ]
     tmp.sort(reverse=True)
-    print str(tmp) 
+    print (str(tmp) )

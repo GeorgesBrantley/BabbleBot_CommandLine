@@ -55,7 +55,7 @@ def userBestFriends(user,Users,limit=0):
     totalLikes = 0 # used later for weighing
  
     # iterate through Users
-    for key,person in Users.iteritems():
+    for key,person in Users.items():
         # no circle Jerking
         if key != user.userID:
             # Creates Dict obj
@@ -77,7 +77,7 @@ def userBestFriends(user,Users,limit=0):
     
     # iterate through Others, find top 3
     tmp = []
-    for key,usr in Others.iteritems():
+    for key,usr in Others.items():
         tmp.append(usr)
 
     # WEIGH LIKES, Person with less comments -> less friends power
@@ -134,7 +134,7 @@ def userBestFriends(user,Users,limit=0):
 def globalBestFriends(Users):
     output = "" 
     output = "GLOBAL BEST FRIENDS\n(Weighted Friendship takes in account of raw likes)\n\n"
-    for key,person in Users.iteritems():
+    for key,person in Users.items():
        output+=userBestFriends(person,Users,3) 
     return output
 
@@ -147,7 +147,7 @@ def globalTommyMarkChain(allComs,Users):
 def globalLikeRanks(Users):
     # Ranks all users by # of likes
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     tmp = sorted(tmp, key=lambda user:user.numLikes())        
     output = "Number of Likes per User: \n"
@@ -161,7 +161,7 @@ def globalLikeRanks(Users):
 def globalCommentsRanks(Users):
     # Ranks all users by number of comments
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     tmp = sorted(tmp, key=lambda user:user.numPosts)        
     output = "Number of Shitposts per User: \n"
@@ -174,7 +174,7 @@ def globalCommentsRanks(Users):
 def globalRatioRanks(Users):
     # Ranking of Likes/Comments 
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     for u in tmp:
         u.ratio = float(u.numLikes())/u.numPosts
@@ -186,7 +186,7 @@ def globalRatioRanks(Users):
 
 def globalCommonWords(Users):
     output = ""
-    for key,u in Users.iteritems():
+    for key,u in Users.items():
         output += getCommonWords(u,3)  
     return output
 
@@ -200,7 +200,7 @@ def globalSexismTracker(Users):
     People = {} #[Name:Name,ID,M/W,#likes given to women, #likes total?] 
 
     # iterate through Users, get as much info as possible
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         # Ask for Gender:
         try:
             gender = raw_input("What Gender does " + usr.name + \
@@ -215,7 +215,7 @@ def globalShameCount(Users):
     # List all Shame Values
     # I could have made this a loop thing, but fuck it
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     output = "SHAME Medals Per User: \n"
     tmp = sorted(tmp, key=lambda user:user.shameLikes)        
@@ -232,7 +232,7 @@ def globalBronzeCount(Users):
     # Get lists of all the Users and their Medals
     # I could have made this a loop thing, but fuck it
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     output = "\nBronze Medals Per User: \n"
     tmp = sorted(tmp, key=lambda user:user.broMedal)        
@@ -249,7 +249,7 @@ def globalSilverCount(Users):
     # get list of Silver Medals
     # I could have made this a loop thing, but fuck it
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     output = "Silver Medals Per User: \n"
     tmp = sorted(tmp, key=lambda user:user.silMedal)        
@@ -266,7 +266,7 @@ def globalGoldCount(Users):
     # get list of GOld Medals
     # I could have made this a loop thing, but fuck it
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     output = "Gold Medals Per User:\n"
     tmp = sorted(tmp, key=lambda user:user.golMedal)        
@@ -281,7 +281,7 @@ def globalPlatinumCount(Users):
     # get list of Platinum medals
     # I could have made this a loop thing, but fuck it
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     output = "Platinum Medals Per User:\n"
     tmp = sorted(tmp, key=lambda user:user.plaMedal)        
@@ -298,7 +298,7 @@ def globalDiamondCount(Users):
     # get list of Diamond medals
     # I could have made this a loop thing, but fuck it
     tmp = []
-    for key,usr in Users.iteritems():
+    for key,usr in Users.items():
         tmp.append(usr) 
     output = "Diamond Medals Per User:\n"
     tmp = sorted(tmp, key=lambda user:user.diaMedal)        
