@@ -350,7 +350,8 @@ def globeOptions(bot):
         print( "6. Global Best Friends")
         print( "7. GLobal Sexism Tracker")
         print( "8. MEDALS")
-        print( "9. Exit")
+        print( "9. Worlde Champs")
+        print( "10. Exit")
         inputOpt = input("Input Option Choice (1-9): ")
         try:
             inputOpt = int(inputOpt)
@@ -385,6 +386,8 @@ def globeOptions(bot):
         elif inputOpt == 8:
             medalOptions(bot)
         elif inputOpt == 9:
+            output = menuOpts.globalWordle(Users)
+        elif inputOpt == 10:
             break
         else:
             print ("Error!")

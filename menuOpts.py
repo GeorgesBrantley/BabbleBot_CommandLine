@@ -141,9 +141,11 @@ def globalBestFriends(Users):
 def globalMarkChain(allComs,Users):
     # Creates mark chain for everyone
     return "Markov Chain for Everyone :\n> " + marky(False,allComs,Users,True)
+
 def globalTommyMarkChain(allComs,Users):
     # Creates a mark chain for everyone and TOMMY
     return "TOMMY Markov Chain for Everyone :\n> " + marky(False,allComs,Users,True,True)
+
 def globalLikeRanks(Users):
     # Ranks all users by # of likes
     tmp = []
@@ -158,6 +160,7 @@ def globalLikeRanks(Users):
         output += x.name + ": " + str(likes) + " Likes\n"
     output += "\nTotal Likes: " + str(total)
     return output
+
 def globalCommentsRanks(Users):
     # Ranks all users by number of comments
     tmp = []
@@ -210,6 +213,45 @@ def globalSexismTracker(Users):
         #TODO add check to make sure it is valid. 
         People[usr.name] = [usr.name,usr.userID,'?',0,0]
     return output
+
+def globalWordle(Users):
+    wordle = []
+    for key,user in Users.items():
+        wordle.append(user)
+     
+    for user in wordle:
+        user.wordlePoints = 0
+        user.wordleTries = 0
+        for comment in user.coms:
+            try:
+                if re.match(r"Wordle \d{3} [123456X]/6\*?\n", comment['text']):        
+                    w = re.findall(r"Wordle (\d{3}) ([123456X])/6\*?\n", comment['text'])
+                    ww = w[0]
+                    session, score = ww
+                    if score == "X":
+                        user.wordlePoints += 1
+                    elif score == "6":
+                        user.wordlePoints += 2
+                    elif score == "5":
+                        user.wordlePoints += 3
+                    elif score == "4":
+                        user.wordlePoints += 4
+                    elif score == "3":
+                        user.wordlePoints += 5
+                    elif score == "2":
+                        user.wordlePoints += 6
+                    elif score == "1":
+                        user.wordlePoints += 7
+                    user.wordleTries += 1
+            except:
+                dog = 0
+    wordle = sorted(wordle,key=lambda user:user.wordlePoints)
+    output = "Total Wordles:\n"
+    for x in reversed(wordle):
+        if x.wordlePoints>0:
+            output += x.name + ": " + str(x.wordlePoints) + " Points (/"+str(x.wordleTries)+")\n"
+    return output
+
 
 def globalShameCount(Users):
     # List all Shame Values
