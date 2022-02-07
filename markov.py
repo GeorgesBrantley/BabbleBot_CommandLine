@@ -9,18 +9,26 @@ def marky(userID,allComs,Users,globe=False, lisa = False):
     strInput = ""
     if globe:
         # USE EVERYONES
+        endEarly=0
         for x in allComs:
+            if endEarly > 500:
+                break
             if x["sender_type"] == "user":
                 try:
+                    endEarly += 1
                     strInput += x['text'] + ". "
                 except:
                     pass
         if lisa:
             strInput += catchFootball()
     elif not globe:
+        endEarly = 0
         for x in Users[userID].coms:
+            if endEarly > 500:
+                break
             try:
                 # sometimes the text has errors (fucking emojis)
+                endEarly += 1
                 strInput += x['text']+ ". "
             except:
                 pass
